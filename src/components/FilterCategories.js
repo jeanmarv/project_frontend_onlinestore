@@ -7,8 +7,8 @@ class FillterCatergories extends React.Component {
     return( 
         <ul>
             {products.map(({ id, name }) => (
-                <li key={id}>{name}</li>
-                                    
+                <li data-testid="category" key={id}>{name}</li>
+
             )
             ) }
         </ul>
