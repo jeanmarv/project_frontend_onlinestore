@@ -6,10 +6,10 @@ class CardList extends React.Component {
   goToCart = ({ target }) => {
     const { id } = target;
     if (localStorage.getItem('ShoppingCartStorage')) {
-      const saveStorage = localStorage.getItem('ShoppingCartStorage');
+      const saveStorage = JSON.parse(localStorage.getItem('ShoppingCartStorage'));
       const objectID = { id };
-      saveStorage.push(objectID);
-      localStorage.setItem('ShoppingCartStorage', JSON.stringify(saveStorage));
+      const save = [objectID, ...saveStorage];
+      localStorage.setItem('ShoppingCartStorage', JSON.stringify(save));
     } else {
       const saveId = [{ id }];
       localStorage.setItem('ShoppingCartStorage', JSON.stringify(saveId));
