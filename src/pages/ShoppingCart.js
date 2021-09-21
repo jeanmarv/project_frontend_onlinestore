@@ -4,7 +4,7 @@ class ShoppingCart extends React.Component {
   constructor() {
     super();
     this.state = {
-      ShoppingCartStorage: localStorage.getItem('ShoppingCartStorage'),
+      ShoppingCartStorage: JSON.parse(localStorage.getItem('ShoppingCartStorage')),
     };
   }
 
@@ -13,7 +13,7 @@ class ShoppingCart extends React.Component {
     return (
       <div>
         <p data-testid="shopping-cart-product-name">{ ShoppingCartStorage }</p>
-        <p data-testid="shopping-cart-product-quantity">1</p>
+        <p data-testid="shopping-cart-product-quantity">{ ShoppingCartStorage.length }</p>
       </div>
     );
   }

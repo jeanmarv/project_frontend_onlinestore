@@ -3,9 +3,17 @@ import PropTypes from 'prop-types';
 // import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class CardList extends React.Component {
-  goToCart = () => {
-    const { findResult } = this.props;
-    localStorage.setItem('ShoppingCartStorage', findResult.title);
+  goToCart = ({ target }) => {
+    const { id } = target;
+    if (localStorage.getItem('ShoppingCartStorage')) {
+      const saveStorage = localStorage.getItem('ShoppingCartStorage');
+      const objectID = { id };
+      saveStorage.push(objectID);
+      localStorage.setItem('ShoppingCartStorage', JSON.stringify(saveStorage));
+    } else {
+      const saveId = [{ id }];
+      localStorage.setItem('ShoppingCartStorage', JSON.stringify(saveId));
+    }
   }
 
   render() {
@@ -23,8 +31,11 @@ class CardList extends React.Component {
             <button
               type="button"
               data-testid="product-add-to-cart"
+              id={ title }
               onClick={ this.goToCart }
-            />
+            >
+              ADICIONAR AO CARRINHO
+            </button>
           </div>
         ))}
       </section>
