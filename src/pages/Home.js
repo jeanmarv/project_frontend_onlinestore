@@ -61,9 +61,7 @@ class Home extends React.Component {
     });
     const { id } = target;
     const vazia = '$QUERY';
-    //console.log(id);
     const findObj = await getProductsFromCategoryAndQuery(id, vazia);
-    //console.log(findObj);
     this.setState({
       findResult: findObj.results,
     });

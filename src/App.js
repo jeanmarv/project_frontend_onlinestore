@@ -14,7 +14,10 @@ function App() {
         <Route exact path="/shoppingcart">
           <ShoppingCart />
         </Route>
-        <Route path="/:category_id/:id" render={(props) => <ProductsDetail {...props} /> } />
+        <Route
+          path="/:categoryId/:id"
+          render={ (props) => <ProductsDetail { ...props } /> }
+        />
       </div>
     </BrowserRouter>
   );
