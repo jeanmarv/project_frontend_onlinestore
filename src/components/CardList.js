@@ -45,7 +45,6 @@ class CardList extends React.Component {
               ADICIONAR AO CARRINHO
             </button>
           </div>
-
         ))}
       </section>
     );
