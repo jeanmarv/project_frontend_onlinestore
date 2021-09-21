@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 // import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class CardList extends React.Component {
@@ -23,20 +24,28 @@ class CardList extends React.Component {
     }
     return (
       <section id="card-list">
-        { findResult.map(({ title, thumbnail, price, id }) => (
-          <div data-testid="product" key={ id }>
-            <h3>{title}</h3>
-            <img src={ thumbnail } alt="imagem do produto" />
-            <h5>{price}</h5>
+        { findResult.map((obj) => (
+          <div key={ obj.id }>
+            <Link
+              data-testid="product-detail-link"
+              to={ `/${obj.category_id}/${obj.id}` }
+            >
+              <div data-testid="product">
+                <h3>{obj.title}</h3>
+                <img src={ obj.thumbnail } alt="imagem do produto" />
+                <h5>{obj.price}</h5>
+              </div>
+            </Link>
             <button
               type="button"
               data-testid="product-add-to-cart"
-              id={ title }
+              id={ obj.title }
               onClick={ this.goToCart }
             >
               ADICIONAR AO CARRINHO
             </button>
           </div>
+
         ))}
       </section>
     );

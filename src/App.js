@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import ShoppingCart from './pages/ShoppingCart';
+import ProductsDetail from './pages/ProductsDetail';
 
 function App() {
   return (
@@ -13,6 +14,10 @@ function App() {
         <Route exact path="/shoppingcart">
           <ShoppingCart />
         </Route>
+        <Route
+          path="/:categoryId/:id"
+          render={ (props) => <ProductsDetail { ...props } /> }
+        />
       </div>
     </BrowserRouter>
   );
