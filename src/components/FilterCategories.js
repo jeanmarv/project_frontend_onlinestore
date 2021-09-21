@@ -3,13 +3,22 @@ import PropTypes from 'prop-types';
 
 class FillterCatergories extends React.Component {
   render() {
-    const { products } = this.props;
+    const { products, onClickCategorie } = this.props;
     return (
-      <ul>
+      <aside id="category">
         {products.map(({ id, name }) => (
-          <li data-testid="category" key={ id }>{name}</li>
+          <button
+            type="button"
+            key={ id }
+            id={ id }
+            onClick={ onClickCategorie }
+          >
+            <li data-testid="category">{name}</li>
+
+          </button>
+
         )) }
-      </ul>
+      </aside>
     );
   }
 }
@@ -18,6 +27,7 @@ FillterCatergories.propTypes = {
   products: PropTypes.arrayOf(
     PropTypes.object,
   ).isRequired,
+  onClickCategorie: PropTypes.func.isRequired,
 };
 
 export default FillterCatergories;
