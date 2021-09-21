@@ -2,22 +2,46 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import FillterCatergories from '../components/FilterCategories';
-import { getCategories } from '../services/api';
+import { getCategories, getProductsFromCategoryAndQuery } from '../services/api';
 import CardList from '../components/CardList';
 
 class Home extends React.Component {
   constructor() {
     super();
     this.state = {
+      findResult: [],
+      requestFindAPI: false,
       categories: [],
       requestCategoriesApi: true,
       busca: '',
-      button: false,
+      cardList: false,
     };
   }
 
   componentDidMount() {
     this.funcGetCategories();
+    const { busca } = this.state;
+    this.getProductsAPI(busca);
+  }
+
+  componentDidUpdate() {
+    const { busca } = this.state;
+    this.getProductsAPI(busca);
+  }
+
+  getProductsAPI = async (busca) => {
+    const { requestFindAPI } = this.state;
+    if (requestFindAPI) {
+      const vazia = '$CATEGORY_ID';
+      const findObj = await getProductsFromCategoryAndQuery(vazia, busca);
+      this.setState({
+        findResult: findObj.results,
+      });
+      this.setState({
+        cardList: true,
+        requestFindAPI: false,
+      });
+    }
   }
 
   funcGetCategories = async () => {
@@ -31,17 +55,36 @@ class Home extends React.Component {
     }
   }
 
+  onClickCategorie = async ({ target }) => {
+    this.setState({
+      cardList: false,
+    });
+    const { id } = target;
+    const vazia = '$QUERY';
+    console.log(id);
+    const findObj = await getProductsFromCategoryAndQuery(id, vazia);
+    console.log(findObj);
+    this.setState({
+      findResult: findObj.results,
+    });
+    this.setState({
+      cardList: true,
+    });
+  }
+
   handleChange = ({ target }) => {
     const { value } = target;
     this.setState({ busca: value });
   }
 
   onclick = () => {
-    this.setState({ button: true });
+    this.setState({
+      requestFindAPI: true,
+    });
   }
 
   render() {
-    const { categories, requestCategoriesApi, busca, button } = this.state;
+    const { categories, requestCategoriesApi, busca, cardList, findResult } = this.state;
     return (
       <div>
         <SearchBar
@@ -52,8 +95,13 @@ class Home extends React.Component {
         <Link data-testid="shopping-cart-button" to="/shoppingcart">
           <img src="../../shopping-cart-1985.png" alt="carrinho" />
         </Link>
-        {!requestCategoriesApi && <FillterCatergories products={ categories } />}
-        {button && <CardList busca={ busca } />}
+        <main>
+          {!requestCategoriesApi && <FillterCatergories
+            onClickCategorie={ this.onClickCategorie }
+            products={ categories }
+          />}
+          {cardList && <CardList findResult={ findResult } />}
+        </main>
       </div>
     );
   }

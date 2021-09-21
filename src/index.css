@@ -11,3 +11,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+#category {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+}
+
+#category button {
+  text-align: left;
+  border: none;
+  padding-top: 10px;
+}
+
+#category button:hover {
+  font-weight: bold;
+}
+
+main {
+  display: flex;
+}
+#card-list{
+width: 60%;
+}
