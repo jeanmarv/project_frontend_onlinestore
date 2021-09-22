@@ -34,3 +34,13 @@ main {
 #card-list{
 width: 60%;
 }
+
+#carrinhoDeCompras input {
+  width: 40px;
+}
+
+#carrinhoDeCompras {
+padding-top: 20px;
+margin: 30px;
+background-color: aliceblue;
+}

@@ -51,6 +51,7 @@ class Home extends React.Component {
       this.setState({
         categories,
         requestCategoriesApi: false,
+        findResult: [],
       });
     }
   }

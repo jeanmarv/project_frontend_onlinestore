@@ -10,10 +10,9 @@ class FillterCatergories extends React.Component {
           <button
             type="button"
             key={ id }
-            id={ id }
             onClick={ onClickCategorie }
           >
-            <li data-testid="category">{name}</li>
+            <li id={ id } data-testid="category">{name}</li>
 
           </button>
 
