@@ -22,8 +22,6 @@ class ProductsDetail extends React.Component {
       const fecthApiId = await getProductsFromCategoryAndQuery(categoryId, vazia);
       const fecthResult = await fecthApiId.results;
       const result = fecthResult.find((obj) => obj.id === id);
-      console.log(fecthResult);
-      console.log(result);
       this.setState({
         result,
         render: true,

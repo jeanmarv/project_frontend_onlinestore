@@ -1,19 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import { getProductsFromCategoryAndQuery } from '../services/api';
 
 class CardList extends React.Component {
   goToCart = ({ target }) => {
     const { id } = target;
+
     if (localStorage.getItem('ShoppingCartStorage')) {
       const saveStorage = JSON.parse(localStorage.getItem('ShoppingCartStorage'));
-      const objectID = { id };
-      const save = [objectID, ...saveStorage];
-      localStorage.setItem('ShoppingCartStorage', JSON.stringify(save));
+      const objectID = { id, quantidade: 1 };
+      const boolean = saveStorage.some((obj) => obj.id === objectID.id);
+      if (boolean) {
+        const buscaItemRepetido = saveStorage.reduce((acc, obj) => {
+          let temp = acc;
+          if (obj.id === objectID.id) {
+            obj.quantidade += 1;
+          }
+          temp = [...temp, obj];
+          return temp;
+        }, []);
+
+        const save = [...buscaItemRepetido];
+        localStorage.setItem('ShoppingCartStorage', JSON.stringify(save));
+      } else {
+        const save = [objectID, ...saveStorage];
+        localStorage.setItem('ShoppingCartStorage', JSON.stringify(save));
+      }
     } else {
-      const saveId = [{ id }];
-      localStorage.setItem('ShoppingCartStorage', JSON.stringify(saveId));
+      const objectID = [{ id, quantidade: 1 }];
+      localStorage.setItem('ShoppingCartStorage', JSON.stringify(objectID));
     }
   }
 

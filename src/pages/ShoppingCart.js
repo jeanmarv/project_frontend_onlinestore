@@ -15,7 +15,7 @@ class ShoppingCart extends React.Component {
         ShoppingCartStorage.map((obj, index) => (
           <div key={ index }>
             <p data-testid="shopping-cart-product-name">{ obj.id }</p>
-            <p data-testid="shopping-cart-product-quantity">1</p>
+            <p data-testid="shopping-cart-product-quantity">{ obj.quantidade }</p>
           </div>))
       );
     }
