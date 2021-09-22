@@ -13,9 +13,35 @@ class ShoppingCart extends React.Component {
     if (ShoppingCartStorage !== undefined) {
       return (
         ShoppingCartStorage.map((obj, index) => (
-          <div key={ index }>
-            <p data-testid="shopping-cart-product-name">{ obj.id }</p>
-            <p data-testid="shopping-cart-product-quantity">{ obj.quantidade }</p>
+          <div key={ index } id="carrinhoDeCompras">
+            <div>
+              <button
+                type="button"
+                // onClick={}
+              >
+                X
+              </button>
+            </div>
+            <div>
+              <p data-testid="shopping-cart-product-name">{ obj.id }</p>
+              <div>
+                <button
+                  data-testid="product-increase-quantity"
+                  type="button"
+                >
+                  +
+                </button>
+                <p data-testid="shopping-cart-product-quantity">
+                  { obj.quantidade }
+                </p>
+                <button
+                  data-testid="product-decrease-quantity"
+                  type="button"
+                >
+                  -
+                </button>
+              </div>
+            </div>
           </div>))
       );
     }

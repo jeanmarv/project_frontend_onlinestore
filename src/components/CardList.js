@@ -23,7 +23,7 @@ class CardList extends React.Component {
         const save = [...buscaItemRepetido];
         localStorage.setItem('ShoppingCartStorage', JSON.stringify(save));
       } else {
-        const save = [objectID, ...saveStorage];
+        const save = [...saveStorage, objectID];
         localStorage.setItem('ShoppingCartStorage', JSON.stringify(save));
       }
     } else {
