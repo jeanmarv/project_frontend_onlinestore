@@ -8,6 +8,49 @@ class ShoppingCart extends React.Component {
     };
   }
 
+  componentDidUpdate() {
+
+  }
+
+  atualizaState = () => {
+    const totalItens = JSON.parse(localStorage.getItem('ShoppingCartStorage'));
+    this.setState({ ShoppingCartStorage: totalItens });
+  }
+
+  removeLocalStorage= ({ target }) => {
+    const { id } = target;
+    const totalItens = JSON.parse(localStorage.getItem('ShoppingCartStorage'));
+    totalItens.splice(id, 1);
+    localStorage.setItem('ShoppingCartStorage', JSON.stringify(totalItens));
+    this.atualizaState();
+  }
+
+  aumentaQuantidade = ({ target }) => {
+    const { id } = target;
+    const totalItens = JSON.parse(localStorage.getItem('ShoppingCartStorage'));
+    const obj = totalItens[id];
+    obj.quantidade += 1;
+    totalItens.splice(id, 1, obj);
+    localStorage.setItem('ShoppingCartStorage', JSON.stringify(totalItens));
+    this.atualizaState();
+  }
+
+  diminuiQuantidade = ({ target }) => {
+    const { id } = target;
+    const totalItens = JSON.parse(localStorage.getItem('ShoppingCartStorage'));
+    const obj = totalItens[id];
+    if (obj.quantidade <= 0) {
+      totalItens.splice(id, 1, obj);
+      localStorage.setItem('ShoppingCartStorage', JSON.stringify(totalItens));
+      this.atualizaState();
+    } else {
+      obj.quantidade -= 1;
+      totalItens.splice(id, 1, obj);
+      localStorage.setItem('ShoppingCartStorage', JSON.stringify(totalItens));
+      this.atualizaState();
+    }
+  }
+
   addToCart = () => {
     const { ShoppingCartStorage } = this.state;
     if (ShoppingCartStorage !== undefined) {
@@ -16,8 +59,9 @@ class ShoppingCart extends React.Component {
           <div key={ index } id="carrinhoDeCompras">
             <div>
               <button
+                id={ index }
                 type="button"
-                // onClick={}
+                onClick={ this.removeLocalStorage }
               >
                 X
               </button>
@@ -25,9 +69,12 @@ class ShoppingCart extends React.Component {
             <div>
               <p data-testid="shopping-cart-product-name">{ obj.id }</p>
               <div>
+
                 <button
+                  id={ index }
                   data-testid="product-increase-quantity"
                   type="button"
+                  onClick={ this.aumentaQuantidade }
                 >
                   +
                 </button>
@@ -35,8 +82,10 @@ class ShoppingCart extends React.Component {
                   { obj.quantidade }
                 </p>
                 <button
+                  id={ index }
                   data-testid="product-decrease-quantity"
                   type="button"
+                  onClick={ this.diminuiQuantidade }
                 >
                   -
                 </button>
@@ -51,11 +100,9 @@ class ShoppingCart extends React.Component {
     const { ShoppingCartStorage } = this.state;
     return (
       <div>
-        {
-          !ShoppingCartStorage
-            ? <p data-testid="shopping-cart-empty-message">Seu carrinho está vazio</p>
-            : this.addToCart()
-        }
+        {!ShoppingCartStorage
+          ? <p data-testid="shopping-cart-empty-message">O seu carrinho está vazio</p>
+          : this.addToCart()}
       </div>
     );
   }
