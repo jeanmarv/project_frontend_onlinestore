@@ -66,6 +66,7 @@ class ShoppingCart extends React.Component {
                 X
               </button>
             </div>
+
             <div>
               <p data-testid="shopping-cart-product-name">{ obj.id }</p>
               <div>
